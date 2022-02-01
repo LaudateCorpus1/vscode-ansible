@@ -39,13 +39,13 @@ if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
     node --version
 fi
 
-pipx install pre-commit
+which pre-commit || pipx install pre-commit
 uname
 if [ -f /etc/hosts ]; then  # if we are not on pure Windows
     # GHA comes with ansible-core preinstalled via pipx, so we will
     # inject the linter into it. MacOS does not have it.
-    pipx install ansible-core
-    pipx inject --include-apps ansible-core ansible-lint yamllint
+    which ansible || pipx install ansible-core
+    pipx inject --include-deps ansible-core --include-binaries ansible-lint yamllint
     ansible --version
     ansible-lint --version
 fi
