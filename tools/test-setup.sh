@@ -12,7 +12,10 @@ for entry in "$HOME/.local/bin"; do
         PATH="$entry:$PATH"
     fi
 done
+# remove npm from PATH
+PATH=`echo $PATH | tr ':' '\n' | grep -v /npm | tr '\n' ':'`"
 export PATH
+
 # save it for further sessions
 # shellcheck disable=SC2016
 echo 'export PATH="$PATH"' >> ~/.bashrc
