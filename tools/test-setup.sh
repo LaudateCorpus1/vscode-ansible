@@ -3,6 +3,7 @@
 # name and location is based on Zuul CI, which can automatically run it.
 set -euo pipefail
 set
+lsb_release -dc
 
 # User specific environment
 # shellcheck disable=SC2076
@@ -12,8 +13,9 @@ for entry in "$HOME/.local/bin"; do
         PATH="$entry:$PATH"
     fi
 done
+set +x
 # remove npm from PATH
-PATH=`echo $PATH | tr ':' '\n' | grep -v /npm | tr '\n' ':'`"
+PATH=`echo $PATH | tr ':' '\n' | grep -v /npm | tr '\n' ':'`
 export PATH
 
 # save it for further sessions
@@ -22,14 +24,21 @@ echo 'export PATH="$PATH"' >> ~/.bashrc
 set -x
 
 if [ -f "/etc/os-release" ]; then
-    sudo apt-get update  # mandatory or other apt-get commands fail
+    if [ ! -f "/var/cache/apt/pkgcache.bin" ]; then
+      sudo apt-get update  # mandatory or other apt-get commands fail
+    fi
     sudo apt-get remove -y ansible || true
 fi
 
 # on WSL we want to avoid using Windows's npm (broken)
-if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
+# if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
+if [ true ]; then
     sudo apt-get install -y curl
-    curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    curl -sL https://deb.nodesource.com/setup_16.x | sudo bash
+    sudo apt install nodejs
+    node --version
+
+    #curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
     which -a npm
     which -a node || true
     exit 0
