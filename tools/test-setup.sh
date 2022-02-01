@@ -11,11 +11,11 @@ for entry in "$HOME/.local/bin"; do
         PATH="$entry:$PATH"
     fi
 done
-set -x
 export PATH
 # save it for further sessions
 # shellcheck disable=SC2016
 echo 'export PATH="$PATH"' >> ~/.bashrc
+set -x
 
 if [ -f "/etc/os-release" ]; then
     sudo apt-get update  # mandatory or other apt-get commands fail
@@ -28,14 +28,14 @@ if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
     curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
     which -a npm
     which -a node
-    # Activate nvm
-    set +exu
-    source ~/.bashrc
-    set -exu
-
-    nvm install --lts
+    # Activate nvm for current shell
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
     which -a node
     which -a npm
+    
+    nvm install --lts
+    which -a node
     node --version
 fi
 
