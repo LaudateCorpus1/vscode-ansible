@@ -99,6 +99,11 @@ jobs:
           # echo "$HOME/.local/bin" >> $GITHUB_PATH
           ./tools/test-setup.sh
 
+      - name: Run nvm tricks
+        run: |
+          nvm install --lts
+          which -a node
+
       - name: Link development version of ansible-language-server
         if: ${{ matrix.devel }}
         run: |
