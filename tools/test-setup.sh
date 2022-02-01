@@ -34,7 +34,7 @@ if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
     . ~/.bashrc
     which -a node
     which -a npm
-    
+
     nvm install --lts
     which -a node
     node --version
