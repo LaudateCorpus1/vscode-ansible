@@ -28,7 +28,7 @@ if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
     sudo apt-get install -y curl
     curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
     which -a npm
-    which -a node
+    which -a node || true
     exit 0
     # Activate nvm for current shell
     . ~/.nvm/nvm.sh
