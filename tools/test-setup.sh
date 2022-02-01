@@ -2,8 +2,6 @@
 # This tool is used to setup the environment for running the tests. Its name
 # name and location is based on Zuul CI, which can automatically run it.
 set -euo pipefail
-set
-lsb_release -dc
 
 # User specific environment
 # shellcheck disable=SC2076
@@ -25,7 +23,7 @@ set -x
 
 if [ -f "/etc/os-release" ]; then
     if [ ! -f "/var/cache/apt/pkgcache.bin" ]; then
-      sudo apt-get update  # mandatory or other apt-get commands fail
+        sudo apt-get update  # mandatory or other apt-get commands fail
     fi
     sudo apt-get remove -y ansible || true
 fi
