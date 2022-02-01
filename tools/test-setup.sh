@@ -26,11 +26,12 @@ if [ -f "/etc/os-release" ]; then
         sudo apt-get update  # mandatory or other apt-get commands fail
     fi
     sudo apt-get remove -y ansible || true
+    sudo apt-get install -y curl pipx pre-commit
 fi
 
 # on WSL we want to avoid using Windows's npm (broken)
 if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
-    sudo apt-get install -y curl
+    
     curl -sL https://deb.nodesource.com/setup_16.x | sudo bash
     sudo apt install nodejs
     node --version
