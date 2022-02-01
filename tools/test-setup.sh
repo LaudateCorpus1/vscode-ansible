@@ -29,27 +29,14 @@ if [ -f "/etc/os-release" ]; then
 fi
 
 # on WSL we want to avoid using Windows's npm (broken)
-# if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
-if [ true ]; then
+if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
     sudo apt-get install -y curl
     curl -sL https://deb.nodesource.com/setup_16.x | sudo bash
     sudo apt install nodejs
     node --version
-
-    #curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    npm --version
     which -a npm
-    which -a node || true
-    exit 0
-    # Activate nvm for current shell
-    . ~/.nvm/nvm.sh
-    . ~/.profile
-    . ~/.bashrc
     which -a node
-    which -a npm
-
-    nvm install --lts
-    which -a node
-    node --version
 fi
 
 which pre-commit || pipx install pre-commit
