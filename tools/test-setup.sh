@@ -33,7 +33,7 @@ if [ "$(which npm)" == '/mnt/c/Program Files/nodejs/npm' ]; then
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
     which -a node
     which -a npm
-    
+
     nvm install --lts
     which -a node
     node --version
